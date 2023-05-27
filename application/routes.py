@@ -1,6 +1,6 @@
 from application import app
 from flask import render_template, request
-from application.forms import SignUpForm
+from application.forms import SignUpForm, SignInForm
 
 @app.route("/")
 @app.route("/index")
@@ -23,3 +23,15 @@ def signup():
     data = {"username": username, "email": email, "password": password}
     form = SignUpForm();
     return render_template("signup.html", signup = True, data = data, form=form)
+
+@app.route("/basket")
+def basket():
+    return render_template("basket.html", basket = True, login = False)
+
+@app.route("/signin")
+def signin():
+    username = request.form.get("usrname", "")
+    password = request.form.get("password", "")
+    data = {"username": username, "password": password}
+    form = SignInForm();
+    return render_template("signin.html", signin = True, data = data, form = form, login = True)
